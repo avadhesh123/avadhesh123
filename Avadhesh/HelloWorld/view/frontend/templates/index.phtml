@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @var \Mageplaza\HelloWorld\Block\Display $block
+ */
+
+echo $block->sayHello();
+?>
+
+
+<div class="content-btn">Content</div>
+
+<div id="ajax-response-id">sssssss</div>
+<?php
+echo $ajaxurl =  $block->getBaseUrl();
+?>
+ <script type="text/javascript">
+    require([
+        'jquery',
+         ], function($) {
+              $(document).ready(function(){
+                
+                $('.content-btn').click(function(e){
+                    var siginindata = '';
+                    var urlsiginin = "<?php echo $block->getBaseUrl().'helloworld/index/view' ?>";
+                    
+                        $.ajax({
+                            url: urlsiginin,
+                            type: "POST",
+                            data: siginindata,
+                            success: function(data){
+                                 alert(data.output);
+                                if(data.error) {
+                                    $('.error-message-signin').empty().append('<div class="message message-error error">'+data.message+'</div>');
+                                }
+                                else{                                        
+                                    $('.error-message-signin').empty().append('<div class="message-success success message">'+data.message+'</div>');
+                                   // location.reload();
+                                }                                
+                            }
+                        });
+                     
+                });
+ 
+            });
+    });
+</script>
+ 
